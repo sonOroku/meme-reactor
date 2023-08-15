@@ -8,3 +8,6 @@ class AccountIn(BaseModel):
 class AccountOut(BaseModel):
     id: str
     username: str
+
+class AccountWithHashPassword(AccountOut):
+    hashed_password: str
