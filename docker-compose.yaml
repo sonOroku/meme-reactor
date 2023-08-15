@@ -19,8 +19,8 @@ services:
       SIGNING_KEY: ${SIGNING_KEY}
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       PORT: 8000
-      DATABASE_URL: mongodb://meme_reactor:memereactor@mongo
-      DB_NAME: meme-reactor-db
+      DATABASE_URL: ${DATABASE_URL}
+      DB_NAME: ${DB_NAME}
     build:
       context: api
       dockerfile: Dockerfile.dev
