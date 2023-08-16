@@ -1,7 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from routers import accounts
 import os
+from authenticator import authenticator
 
 app = FastAPI()
 
@@ -16,3 +17,4 @@ app.add_middleware(
 )
 
 app.include_router(accounts.router)
+app.include_router(authenticator.router)
