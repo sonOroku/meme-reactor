@@ -1,5 +1,5 @@
 import requests
-from models import MemeIn, MemeOut
+from models import MemeIn, MemeTemplate
 import os
 from queries.client import GenRepo
 
@@ -23,9 +23,17 @@ class MemeRepo(GenRepo):
             return meme
 
     def get_memes(self):
-        memes = self.collection.find()
         memes = []
         for item in self.collection.find():
             item["id"] = str(item["_id"])
             memes.append(item)
         return memes
+
+    def get_templates(self):
+        result = requests.get("https://api.imgflip.com/get_memes")
+        templates_list = []
+        templates = result.json()
+        for template in templates["data"]["memes"]:
+            template["id"] = int(template["id"])
+            templates_list.append(template)
+        return templates_list
