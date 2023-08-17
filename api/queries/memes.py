@@ -2,6 +2,7 @@ import requests
 from models import MemeIn, MemeTemplate
 import os
 from queries.client import GenRepo
+from bson import ObjectId
 
 USERNAME = os.environ.get("IMGFLIP_USERNAME")
 PASSWORD = os.environ.get("IMGFLIP_PASSWORD")
@@ -37,3 +38,9 @@ class MemeRepo(GenRepo):
             template["id"] = int(template["id"])
             templates_list.append(template)
         return templates_list
+
+    def delete_meme(self, id: str):
+        delete_valid = self.collection.delete_one(
+            {"_id": ObjectId(id)}
+        )
+        return delete_valid.deleted_count > 0

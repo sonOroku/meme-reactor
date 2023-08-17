@@ -24,3 +24,8 @@ def get_templates(
     repo : MemeRepo=Depends()
 ):
     return repo.get_templates()
+
+@router.delete("/api/memes/{meme_id}", response_model= bool)
+def delete_meme(meme_id: str, repo : MemeRepo=Depends()
+):
+    return repo.delete_meme(meme_id)
