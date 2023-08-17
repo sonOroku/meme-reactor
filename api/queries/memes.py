@@ -21,3 +21,11 @@ class MemeRepo(GenRepo):
         if response.inserted_id:
             meme["id"] = str(response.inserted_id)
             return meme
+
+    def get_memes(self):
+        memes = self.collection.find()
+        memes = []
+        for item in self.collection.find():
+            item["id"] = str(item["_id"])
+            memes.append(item)
+        return memes

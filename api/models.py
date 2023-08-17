@@ -25,3 +25,9 @@ class MemeIn(BaseModel):
 class MemeOut(BaseModel):
     id: str
     meme_url: str
+
+
+class MemeTemplate(BaseModel):
+    id: int
+    name: str
+    url: str

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from models import MemeIn, MemeOut
 from queries.memes import MemeRepo
+from typing import List
 
 router = APIRouter()
 
@@ -11,3 +12,9 @@ def create_meme(
 ):
     meme = repo.create_meme(input)
     return meme
+
+@router.get("/api/memes", response_model=List[MemeOut])
+def get_memes(
+    repo: MemeRepo = Depends(),
+):
+    return repo.get_memes()
