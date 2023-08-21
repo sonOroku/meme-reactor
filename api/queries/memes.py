@@ -1,4 +1,5 @@
 import requests
+import datetime
 from models import MemeIn, MemeTemplate
 import os
 from queries.client import GenRepo
@@ -11,23 +12,32 @@ PASSWORD = os.environ.get("IMGFLIP_PASSWORD")
 class MemeRepo(GenRepo):
     collection_name = "memes"
 
-    def create_meme(self, input: MemeIn):
+    def create_meme(self, input: MemeIn, user_id: str):
         info = input.dict()
         info["username"] = USERNAME
         info["password"] = PASSWORD
-        result = requests.post("https://api.imgflip.com/caption_image", params=info)
+        result = requests.post(
+            "https://api.imgflip.com/caption_image", params=info
+        )
         data = result.json()
         meme = {"meme_url": data["data"]["url"]}
+        meme["created_by"] = user_id
+        meme["created_at"] = datetime.datetime.now()
         response = self.collection.insert_one(meme)
         if response.inserted_id:
             meme["id"] = str(response.inserted_id)
             return meme
 
-    def get_memes(self):
+    def get_memes(self, user_id: str = None):
         memes = []
-        for item in self.collection.find():
-            item["id"] = str(item["_id"])
-            memes.append(item)
+        if user_id is not None:
+            for item in self.collection.find({"created_by": user_id}):
+                item["id"] = str(item["_id"])
+                memes.append(item)
+        else:
+            for item in self.collection.find():
+                item["id"] = str(item["_id"])
+                memes.append(item)
         return memes
 
     def get_templates(self):
@@ -40,7 +50,5 @@ class MemeRepo(GenRepo):
         return templates_list
 
     def delete_meme(self, id: str):
-        delete_valid = self.collection.delete_one(
-            {"_id": ObjectId(id)}
-        )
+        delete_valid = self.collection.delete_one({"_id": ObjectId(id)})
         return delete_valid.deleted_count > 0

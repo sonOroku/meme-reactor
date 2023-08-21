@@ -26,14 +26,14 @@ class MemeIn(BaseModel):
 class MemeOut(BaseModel):
     id: str
     meme_url: str
+    created_by: str
+    created_at: datetime
 
 
 class MemeTemplate(BaseModel):
     id: int
     name: str
     url: str
-    created_by: str
-    created_at: datetime
 
 
 class Like(BaseModel):
