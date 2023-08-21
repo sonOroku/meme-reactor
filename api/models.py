@@ -41,3 +41,7 @@ class Like(BaseModel):
     user_id: str
     meme_id: str
     liked_at: datetime
+
+
+class ErrorResponse(BaseModel):
+    detail: str
