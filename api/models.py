@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 
 class AccountIn(BaseModel):
@@ -31,3 +32,12 @@ class MemeTemplate(BaseModel):
     id: int
     name: str
     url: str
+    created_by: str
+    created_at: datetime
+
+
+class Like(BaseModel):
+    id: str
+    user_id: str
+    meme_id: str
+    liked_at: datetime
