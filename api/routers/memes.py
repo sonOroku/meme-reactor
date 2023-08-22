@@ -25,12 +25,19 @@ def get_memes(
 
 
 @router.get("/api/memes/templates", response_model=List[MemeTemplate])
-def get_templates(repo: MemeRepo = Depends()):
+def get_templates(
+    repo: MemeRepo = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
     return repo.get_templates()
 
 
 @router.delete("/api/memes/{meme_id}", response_model=bool)
-def delete_meme(meme_id: str, repo: MemeRepo = Depends()):
+def delete_meme(
+    meme_id: str,
+    repo: MemeRepo = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
     return repo.delete_meme(meme_id)
 
 
@@ -46,5 +53,6 @@ def get_user_memes(
 def get_meme(
     meme_id: str,
     repo: MemeRepo = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     return repo.get_meme(meme_id)

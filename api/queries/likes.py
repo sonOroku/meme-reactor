@@ -11,7 +11,7 @@ class DuplicateLikeError(ValueError):
 class LikeRepo(GenRepo):
     collection_name = "likes"
 
-    def create_like(self, user_id: str, meme_id: str):
+    def create_like(self, meme_id: str, user_id: str):
         like = {"user_id": user_id, "meme_id": meme_id}
 
         test = self.collection.find_one(like)

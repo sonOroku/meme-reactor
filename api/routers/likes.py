@@ -13,12 +13,12 @@ router = APIRouter()
     response_model=Union[Like, ErrorResponse],
 )
 def create_like(
-    user_id: str,
     meme_id: str,
+    account_data: dict = Depends(authenticator.get_current_account_data),
     repo: LikeRepo = Depends(),
 ):
     try:
-        like = repo.create_like(user_id, meme_id)
+        like = repo.create_like(meme_id, user_id=account_data["id"])
     except DuplicateLikeError:
         raise HTTPException(
             status_code=405, detail="Meme has already been liked."
@@ -30,6 +30,7 @@ def create_like(
 def delete_like(
     like_id: str,
     repo: LikeRepo = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     return repo.delete_like(like_id)
 
