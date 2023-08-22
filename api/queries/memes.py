@@ -1,6 +1,6 @@
 import requests
-import datetime
-from models import MemeIn, MemeTemplate
+from datetime import datetime
+from models import MemeIn
 import os
 from queries.client import GenRepo
 from bson import ObjectId
@@ -22,7 +22,7 @@ class MemeRepo(GenRepo):
         data = result.json()
         meme = {"meme_url": data["data"]["url"]}
         meme["created_by"] = user_id
-        meme["created_at"] = datetime.datetime.now()
+        meme["created_at"] = datetime.now()
         response = self.collection.insert_one(meme)
         if response.inserted_id:
             meme["id"] = str(response.inserted_id)
