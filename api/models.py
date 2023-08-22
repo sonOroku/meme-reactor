@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import List
 
 
 class AccountIn(BaseModel):
@@ -41,6 +42,10 @@ class Like(BaseModel):
     user_id: str
     meme_id: str
     liked_at: datetime
+
+
+class LikesList(BaseModel):
+    likes: List[Like]
 
 
 class ErrorResponse(BaseModel):
