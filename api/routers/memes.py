@@ -40,3 +40,11 @@ def get_user_memes(
     repo: MemeRepo = Depends(),
 ):
     return repo.get_memes(user_id=account_data["id"])
+
+
+@router.get("/api/memes/{meme_id}", response_model=MemeOut)
+def get_meme(
+    meme_id: str,
+    repo: MemeRepo = Depends(),
+):
+    return repo.get_meme(meme_id)

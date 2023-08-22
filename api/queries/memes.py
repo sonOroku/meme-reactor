@@ -52,3 +52,8 @@ class MemeRepo(GenRepo):
     def delete_meme(self, id: str):
         delete_valid = self.collection.delete_one({"_id": ObjectId(id)})
         return delete_valid.deleted_count > 0
+
+    def get_meme(self, id: str):
+        meme = self.collection.find_one({"_id": ObjectId(id)})
+        meme["id"] = str(meme["_id"])
+        return meme
