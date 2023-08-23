@@ -42,7 +42,11 @@ def delete_meme(
     repo: MemeRepo = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    return repo.delete_meme(meme_id)
+    try:
+        deleted = repo.delete_meme(meme_id)
+        return deleted
+    except InvalidId:
+        raise HTTPException(status_code=406, detail="Invalid ID")
 
 
 @router.get("/api/memes/mine", response_model=List[MemeOut])

@@ -4,6 +4,7 @@ from queries.likes import LikeRepo, DuplicateLikeError
 from queries.memes import MemeRepo
 from authenticator import authenticator
 from typing import Union
+from bson.errors import InvalidId
 
 
 router = APIRouter()
@@ -37,7 +38,11 @@ def delete_like(
     repo: LikeRepo = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    return repo.delete_like(like_id)
+    try:
+        deleted = repo.delete_like(like_id)
+        return deleted
+    except InvalidId:
+        raise HTTPException(status_code=406, detail="Invalid ID")
 
 
 @router.get("/api/likes/mine", response_model=LikesList)
