@@ -20,11 +20,11 @@ def create_like(
     repo: LikeRepo = Depends(),
     meme_repo: MemeRepo = Depends(),
 ):
-    meme = meme_repo.get_meme(meme_id)
-    if meme == None:
-        raise HTTPException(status_code=404, detail="Invalid Meme ID")
     try:
+        meme = meme_repo.get_meme(meme_id)
         like = repo.create_like(meme_id, user_id=account_data["id"])
+    except InvalidId:
+        raise HTTPException(status_code=406, detail="Invalid ID")
     except DuplicateLikeError:
         raise HTTPException(
             status_code=405, detail="Meme has already been liked."
