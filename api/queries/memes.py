@@ -61,5 +61,6 @@ class MemeRepo(GenRepo):
 
     def get_meme(self, id: str):
         meme = self.collection.find_one({"_id": ObjectId(id)})
-        meme["id"] = str(meme["_id"])
+        if meme:
+            meme["id"] = str(meme["_id"])
         return meme

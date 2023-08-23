@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from bson.errors import InvalidId
 from authenticator import authenticator
 from models import MemeIn, MemeOut, MemeTemplate, ErrorResponse
 from queries.memes import MemeRepo, InvalidTemplateError
@@ -16,7 +17,7 @@ def create_meme(
     try:
         meme = repo.create_meme(input, user_id=account_data["id"])
     except InvalidTemplateError:
-        raise HTTPException(status_code = 404, detail = "Invalid Template ID")
+        raise HTTPException(status_code=404, detail="Invalid Template ID")
     return meme
 
 
@@ -52,10 +53,14 @@ def get_user_memes(
     return repo.get_memes(user_id=account_data["id"])
 
 
-@router.get("/api/memes/{meme_id}", response_model=MemeOut)
+@router.get("/api/memes/{meme_id}", response_model=Union[MemeOut, None])
 def get_meme(
     meme_id: str,
     repo: MemeRepo = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    return repo.get_meme(meme_id)
+    try:
+        meme = repo.get_meme(meme_id)
+    except InvalidId:
+        raise HTTPException(status_code=406, detail="Invalid ID")
+    return meme

@@ -7,6 +7,7 @@ DB_NAME = os.environ.get("DB_NAME")
 client = MongoClient(DATABASE_URL)
 db = client[DB_NAME]
 
+
 class GenRepo:
     @property
     def collection(self):

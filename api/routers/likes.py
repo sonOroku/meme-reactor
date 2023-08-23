@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from models import Like, ErrorResponse, LikesList
 from queries.likes import LikeRepo, DuplicateLikeError
+from queries.memes import MemeRepo
 from authenticator import authenticator
 from typing import Union
 
@@ -16,7 +17,11 @@ def create_like(
     meme_id: str,
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: LikeRepo = Depends(),
+    meme_repo: MemeRepo = Depends(),
 ):
+    meme = meme_repo.get_meme(meme_id)
+    if meme == None:
+        raise HTTPException(status_code=404, detail="Invalid Meme ID")
     try:
         like = repo.create_like(meme_id, user_id=account_data["id"])
     except DuplicateLikeError:

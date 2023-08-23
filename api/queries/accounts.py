@@ -2,7 +2,6 @@ from queries.client import GenRepo
 from models import AccountIn, AccountWithHashPassword
 
 
-
 class DuplicateAccountError(ValueError):
     pass
 
