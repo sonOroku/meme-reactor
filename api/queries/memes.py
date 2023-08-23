@@ -9,6 +9,10 @@ USERNAME = os.environ.get("IMGFLIP_USERNAME")
 PASSWORD = os.environ.get("IMGFLIP_PASSWORD")
 
 
+class InvalidTemplateError(ValueError):
+    pass
+
+
 class MemeRepo(GenRepo):
     collection_name = "memes"
 
@@ -20,6 +24,8 @@ class MemeRepo(GenRepo):
             "https://api.imgflip.com/caption_image", params=info
         )
         data = result.json()
+        if data["success"] == False:
+            raise InvalidTemplateError
         meme = {"meme_url": data["data"]["url"]}
         meme["created_by"] = user_id
         meme["created_at"] = datetime.now()

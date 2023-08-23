@@ -1,19 +1,22 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from authenticator import authenticator
-from models import MemeIn, MemeOut, MemeTemplate
-from queries.memes import MemeRepo
-from typing import List
+from models import MemeIn, MemeOut, MemeTemplate, ErrorResponse
+from queries.memes import MemeRepo, InvalidTemplateError
+from typing import List, Union
 
 router = APIRouter()
 
 
-@router.post("/api/memes", response_model=MemeOut)
+@router.post("/api/memes", response_model=Union[MemeOut, ErrorResponse])
 def create_meme(
     input: MemeIn,
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: MemeRepo = Depends(),
 ):
-    meme = repo.create_meme(input, user_id=account_data["id"])
+    try:
+        meme = repo.create_meme(input, user_id=account_data["id"])
+    except InvalidTemplateError:
+        raise HTTPException(status_code = 404, detail = "Invalid Template ID")
     return meme
 
 

@@ -6,6 +6,7 @@ from models import AccountIn, AccountWithHashPassword
 class DuplicateAccountError(ValueError):
     pass
 
+
 class AccountRepo(GenRepo):
     collection_name = "accounts"
 
