@@ -50,6 +50,7 @@ services:
     image: mongo-express:latest
     container_name: mongo-express
     environment:
+      WAIT_HOSTS: mongo:27017
       ME_CONFIG_MONGODB_ADMINUSERNAME: meme_reactor
       ME_CONFIG_MONGODB_ADMINPASSWORD: memereactor
       ME_CONFIG_MONGODB_SERVER: mongo
