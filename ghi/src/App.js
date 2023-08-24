@@ -1,37 +1,34 @@
-import { useEffect, useState } from "react";
-import Construct from "./Construct.js";
-import ErrorNotification from "./ErrorNotification";
-import "./App.css";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Meme} from "./components/Meme";
 
-function App() {
-  const [launchInfo, setLaunchInfo] = useState([]);
-  const [error, setError] = useState(null);
+import { Nav } from "./components/Nav";
+// import { Created } from "./pages/Created";
+// import { Generator } from "./pages/Generator";
+// import { Home } from "./pages/Home";
+// import { Liked } from "./pages/Liked";
+// import { Login } from "./pages/Login";
+// import { Profile } from "./pages/Profile";
+// import { SignUp } from "./pages/SignUp";
 
-  useEffect(() => {
-    async function getData() {
-      let url = `${process.env.REACT_APP_API_HOST}/api/launch-details`;
-      console.log("fastapi url: ", url);
-      let response = await fetch(url);
-      console.log("------- hello? -------");
-      let data = await response.json();
-
-      if (response.ok) {
-        console.log("got launch data!");
-        setLaunchInfo(data.launch_details);
-      } else {
-        console.log("drat! something happened");
-        setError(data.message);
-      }
-    }
-    getData();
-  }, []);
-
+export default function App() {
   return (
-    <div>
-      <ErrorNotification error={error} />
-      <Construct info={launchInfo} />
+    <div className="app">
+      <BrowserRouter>
+        <Nav />
+        <Meme />
+        {/* <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/generator" element={<Generator />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/liked" element={<Liked />} />
+          <Route path="/created" element={<Created />} /> */}
+          {/* Catch-All Route in Case of Typo */}
+          {/* <Route path="*" element={<Home />} />
+        </Routes> */}
+      </BrowserRouter>
     </div>
   );
-}
-
-export default App;
+};
