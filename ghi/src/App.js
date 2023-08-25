@@ -1,7 +1,5 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Meme } from "./components/Meme";
-
 import { Nav } from "./components/Nav";
 import { CreatedMemes } from "./pages/CreatedMemes";
 import { CreateMeme } from "./pages/CreateMeme";
@@ -17,18 +15,19 @@ export default function App() {
     <div className="app">
       <BrowserRouter>
         <Nav />
-        <Meme />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/generator" element={<CreateMeme />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/liked" element={<Liked />} />
-          <Route path="/created" element={<CreatedMemes />} />
-          {/* Catch-All Route in Case of Typo */}
-          <Route path="*" element={<Error />} />
-        </Routes>
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/generator" element={<CreateMeme />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/liked" element={<Liked />} />
+            <Route path="/created" element={<CreatedMemes />} />
+            {/* Catch-All Route in Case of Typo */}
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </div>
   );
