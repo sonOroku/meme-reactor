@@ -11,9 +11,11 @@ import { SignUp } from "./pages/SignUp";
 import { Error } from "./pages/Error";
 
 export default function App() {
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, '')
   return (
     <div className="app">
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <Nav />
         <div className="container">
           <Routes>

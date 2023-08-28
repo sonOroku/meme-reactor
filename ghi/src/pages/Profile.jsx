@@ -8,12 +8,23 @@ export function Profile() {
 
       <div>
         <h3>User's Recently Liked</h3>
-        <Meme />
+        <div className="row g-3 mb-3">
+          <div className="col">
+            <Meme />
+          </div>
+          <div className="col">
+
+          </div>
+        </div>
       </div>
 
       <div>
         <h3>User's Recently Created</h3>
-        <Meme />
+        <div className="row g-3 mb-3">
+          <div className="col">
+            <Meme />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -48,7 +48,7 @@ export function CreateMeme() {
                   width="400"
                   height="300"
                   src="https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
-                  alt="placeholder-image"
+                  alt="placeholder"
                 />
               </div>
             </div>
