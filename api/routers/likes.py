@@ -21,7 +21,7 @@ def create_like(
     meme_repo: MemeRepo = Depends(),
 ):
     try:
-        meme = meme_repo.get_meme(meme_id)
+        meme_repo.get_meme(meme_id)
         like = repo.create_like(meme_id, user_id=account_data["id"])
     except InvalidId:
         raise HTTPException(status_code=406, detail="Invalid ID")

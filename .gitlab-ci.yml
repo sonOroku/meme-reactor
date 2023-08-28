@@ -20,6 +20,9 @@ lint-test-job:
 #   stage: test
 #   needs:
 #     - lint-test-job
+#   variables:
+#     MONGO_INITDB_ROOT_USERNAME: meme_reactor
+#     MONGO_INITDB_ROOT_PASSWORD: memereactor
 #   script:
 #     - cd api
 #     - pip install -r requirements.txt
@@ -52,7 +55,7 @@ lint-test-job:
 #     # CI/CD variables, that value will override the value here.
 #     # You need to substitute in your real values for
 #     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
-#     PUBLIC_URL: https://GROUP_NAME.gitlab.io/PROJECT_NAME/
+#     PUBLIC_URL: https://meme-reactor.gitlab.io/meme-reactor/
 #     REACT_APP_API_HOST: https://DEPLOYED_API_SERVICE.mod3projects.com
 #   script:
 #     - cd ghi

@@ -24,7 +24,7 @@ class MemeRepo(GenRepo):
             "https://api.imgflip.com/caption_image", params=info
         )
         data = result.json()
-        if data["success"] == False:
+        if data["success"] is False:
             raise InvalidTemplateError
         meme = {"meme_url": data["data"]["url"]}
         meme["created_by"] = user_id
