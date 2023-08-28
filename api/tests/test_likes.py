@@ -34,6 +34,9 @@ class FakeLikeRepo:
             "liked_at": liked_at,
         }
 
+    def delete_like(self, like_id: str):
+        return True
+
 
 def test_create_like():
     app.dependency_overrides[
@@ -51,3 +54,15 @@ def test_create_like():
         "meme_id": "64e3e5b92ad42415b912423f",
         "liked_at": "2023-08-22T20:51:45.052000",
     }
+
+
+def test_delete_like():
+    app.dependency_overrides[
+        authenticator.get_current_account_data
+    ] = fake_get_current_account_data
+    app.dependency_overrides[LikeRepo] = FakeLikeRepo
+
+    response = client.delete("/api/likes/64e51fe1027d69cadbccebfc")
+
+    assert response.status_code == 200
+    assert response.json() == True
