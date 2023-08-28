@@ -34,7 +34,20 @@ class FakeMemeRepo:
 
 
 def test_get_meme():
-    pass
+    app.dependency_overrides[
+        authenticator.get_current_account_data
+    ] = fake_get_current_account_data
+    app.dependency_overrides[MemeRepo] = FakeMemeRepo
+
+    response = client.get("/api/memes/329472")
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "id": "329472",
+        "meme_url": "https://i.imgflip.com/7whkli.jpg",
+        "created_by": "64e3d31e885b5610c5d2c496",
+        "created_at": "2023-08-21T22:31:21.141000",
+    }
 
 
 def test_create_meme():
