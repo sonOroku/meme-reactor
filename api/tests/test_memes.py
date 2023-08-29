@@ -23,6 +23,30 @@ class FakeMemeRepo:
             "created_at": created_at,
         }
 
+    def get_memes(self):
+        return [
+            {
+                "id": "329472",
+                "meme_url": "https://i.imgflip.com/7whkli.jpg",
+                "created_by": "64e3d31e885b5610c5d2c496",
+                "created_at": "2023-08-22T20:51:45.052000",
+            }
+        ]
+
+    def get_templates(self):
+        return [
+            {
+                "id": 181913649,
+                "name": "Drake Hotline Bling",
+                "url": "https://i.imgflip.com/30b1gx.jpg",
+            },
+            {
+                "id": 87743020,
+                "name": "Two Buttons",
+                "url": "https://i.imgflip.com/1g8my4.jpg",
+            },
+        ]
+
     def create_meme(self, meme_in: MemeIn, user_id: str):
         created_at = datetime(2023, 8, 22, 20, 51, 45, 52000)
         return {
@@ -71,3 +95,38 @@ def test_create_meme():
         "created_by": "64e3d31e885b5610c5d2c496",
         "created_at": "2023-08-22T20:51:45.052000",
     }
+
+
+def test_get_memes():
+    app.dependency_overrides[MemeRepo] = FakeMemeRepo
+    response = client.get("/api/memes")
+    assert response.status_code == 200
+    assert response.json() == [
+        {
+            "id": "329472",
+            "meme_url": "https://i.imgflip.com/7whkli.jpg",
+            "created_by": "64e3d31e885b5610c5d2c496",
+            "created_at": "2023-08-22T20:51:45.052000",
+        }
+    ]
+
+
+def test_get_templates():
+    app.dependency_overrides[
+        authenticator.get_current_account_data
+    ] = fake_get_current_account_data
+    app.dependency_overrides[MemeRepo] = FakeMemeRepo
+    response = client.get("/api/memes/templates")
+    assert response.status_code == 200
+    assert response.json() == [
+        {
+            "id": 181913649,
+            "name": "Drake Hotline Bling",
+            "url": "https://i.imgflip.com/30b1gx.jpg",
+        },
+        {
+            "id": 87743020,
+            "name": "Two Buttons",
+            "url": "https://i.imgflip.com/1g8my4.jpg",
+        },
+    ]
