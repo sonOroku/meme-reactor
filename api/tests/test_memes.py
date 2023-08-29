@@ -4,7 +4,7 @@ from authenticator import authenticator
 from models import MemeIn
 from datetime import datetime
 from queries.memes import MemeRepo
-
+from typing import Optional
 
 client = TestClient(app=app)
 
@@ -23,7 +23,7 @@ class FakeMemeRepo:
             "created_at": created_at,
         }
 
-    def get_memes(self):
+    def get_memes(self, user_id: Optional[str] = None):
         return [
             {
                 "id": "329472",
@@ -55,6 +55,9 @@ class FakeMemeRepo:
             "created_by": user_id,
             "created_at": created_at,
         }
+
+    def delete_meme(self, meme_id: str):
+        return True
 
 
 def test_get_meme():
@@ -129,4 +132,31 @@ def test_get_templates():
             "name": "Two Buttons",
             "url": "https://i.imgflip.com/1g8my4.jpg",
         },
+    ]
+
+
+def test_delete_meme():
+    app.dependency_overrides[
+        authenticator.get_current_account_data
+    ] = fake_get_current_account_data
+    app.dependency_overrides[MemeRepo] = FakeMemeRepo
+    response = client.delete("/api/memes/20349875")
+    assert response.status_code == 200
+    assert response.json() == True
+
+
+def test_get_user_memes():
+    app.dependency_overrides[
+        authenticator.get_current_account_data
+    ] = fake_get_current_account_data
+    app.dependency_overrides[MemeRepo] = FakeMemeRepo
+    response = client.get("/api/memes/mine")
+    assert response.status_code == 200
+    assert response.json() == [
+        {
+            "id": "329472",
+            "meme_url": "https://i.imgflip.com/7whkli.jpg",
+            "created_by": "64e3d31e885b5610c5d2c496",
+            "created_at": "2023-08-22T20:51:45.052000",
+        }
     ]
