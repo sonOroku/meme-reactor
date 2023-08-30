@@ -28,6 +28,14 @@ def get_memes(
     return repo.get_memes()
 
 
+@router.get("/api/memes/mine", response_model=List[MemeOut])
+def get_user_memes(
+    account_data: dict = Depends(authenticator.get_current_account_data),
+    repo: MemeRepo = Depends(),
+):
+    return repo.get_memes(user_id=account_data["id"])
+
+
 @router.get("/api/memes/templates", response_model=List[MemeTemplate])
 def get_templates(
     repo: MemeRepo = Depends(),
@@ -47,14 +55,6 @@ def delete_meme(
         return deleted
     except InvalidId:
         raise HTTPException(status_code=406, detail="Invalid ID")
-
-
-@router.get("/api/memes/mine", response_model=List[MemeOut])
-def get_user_memes(
-    account_data: dict = Depends(authenticator.get_current_account_data),
-    repo: MemeRepo = Depends(),
-):
-    return repo.get_memes(user_id=account_data["id"])
 
 
 @router.get("/api/memes/{meme_id}", response_model=Union[MemeOut, None])

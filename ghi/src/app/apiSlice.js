@@ -9,6 +9,7 @@ export const memeApi = createApi({
   endpoints: (builder) => ({
     getAllMemes: builder.query({
       query: () => "/api/memes",
+      providesTags: ["Memes"],
     }),
 
     login: builder.mutation({
@@ -58,6 +59,28 @@ export const memeApi = createApi({
       },
       invalidatesTags: ["Token"],
     }),
+
+    getTemplates: builder.query({
+        query: () => {
+            return {
+                url: "/api/memes/templates",
+                credentials: "include",
+            }
+        }
+    }),
+
+    createMeme: builder.mutation({
+        query: (input) => {
+            return {
+                url: "/api/memes",
+                method: "POST",
+                body: input,
+                credentials: "include",
+            }
+        },
+        invalidatesTags: ["Memes"]
+    })
+
   }),
 });
 
@@ -67,4 +90,6 @@ export const {
   useSignUpMutation,
   useLogoutMutation,
   useGetTokenQuery,
+  useGetTemplatesQuery,
+  useCreateMemeMutation,
 } = memeApi;
