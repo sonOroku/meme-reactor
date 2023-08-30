@@ -1,6 +1,7 @@
 import React from "react";
 
 export function Meme({ image }) {
+  console.log(image);
   return (
     <div className="meme-container">
       {image ? (

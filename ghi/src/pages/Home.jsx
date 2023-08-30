@@ -7,7 +7,7 @@ export function Home() {
   return (
     <div className="flex-container">
       <h2>Meme Reactor - Home Page</h2>
-      {memes.length ? (
+      {memes ? (
         memes.map((meme) => {
           return (
             <div key={meme.id}>

@@ -30,7 +30,19 @@ export const memeApi = createApi({
       }),
       providesTags: ["Token"],
     }),
+
+    signUp: builder.mutation({
+      query: (body) => {
+        return {
+          url: "/api/accounts",
+          method: "POST",
+          body,
+          credentials: "include",
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetAllMemesQuery, useLoginMutation } = memeApi;
+export const { useGetAllMemesQuery, useLoginMutation, useSignUpMutation } =
+  memeApi;
