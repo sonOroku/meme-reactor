@@ -5,10 +5,12 @@ export const memeApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API_HOST,
   }),
+
   endpoints: (builder) => ({
     getAllMemes: builder.query({
       query: () => "/api/memes",
     }),
+
     login: builder.mutation({
       query: (input) => {
         const formData = new FormData();
@@ -22,12 +24,15 @@ export const memeApi = createApi({
           credentials: "include",
         };
       },
+      invalidatesTags: ["Token"],
     }),
+
     getToken: builder.query({
       query: () => ({
         url: "/token",
         credentials: "include",
       }),
+      transformResponse: (response) => response?.account || null,
       providesTags: ["Token"],
     }),
 
@@ -40,9 +45,26 @@ export const memeApi = createApi({
           credentials: "include",
         };
       },
+      invalidatesTags: ["Token"],
+    }),
+
+    logout: builder.mutation({
+      query: () => {
+        return {
+          url: "/token",
+          method: "DELETE",
+          credentials: "include",
+        };
+      },
+      invalidatesTags: ["Token"],
     }),
   }),
 });
 
-export const { useGetAllMemesQuery, useLoginMutation, useSignUpMutation } =
-  memeApi;
+export const {
+  useGetAllMemesQuery,
+  useLoginMutation,
+  useSignUpMutation,
+  useLogoutMutation,
+  useGetTokenQuery,
+} = memeApi;
