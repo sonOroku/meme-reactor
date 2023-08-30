@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useLoginMutation } from "../app/apiSlice";
-import { useNavigate } from "react-router-dom"
-
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [login, loginResponse] = useLoginMutation()
-  const navigate = useNavigate()
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [login, loginResponse] = useLoginMutation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (loginResponse.isSuccess) {
-      navigate('/')
+      navigate("/");
     }
-  }, [loginResponse])
+  }, [loginResponse]);
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    login({username, password})
-  }
-  console.log(loginResponse)
+    event.preventDefault();
+    login({ username, password });
+  };
   return (
     <div className="row">
       <div className="offset-3 col-6">
