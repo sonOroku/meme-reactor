@@ -79,6 +79,21 @@ export const memeApi = createApi({
             }
         },
         invalidatesTags: ["Memes"]
+    }),
+
+    getUserMemes: builder.query({
+      query: () => {
+        return {
+          url: "/api/memes/mine",
+          credentials: "include",
+        }
+      },
+      transformResponse: (memes) => {
+        if(memes){
+        memes.sort((a, b) => new Date(b["created_at"]) - new Date(a["created_at"]))
+        }
+        return memes
+      }
     })
 
   }),
@@ -92,4 +107,5 @@ export const {
   useGetTokenQuery,
   useGetTemplatesQuery,
   useCreateMemeMutation,
+  useGetUserMemesQuery,
 } = memeApi;

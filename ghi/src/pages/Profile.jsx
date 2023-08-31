@@ -1,7 +1,9 @@
 import React from "react";
 import { Meme } from "../components/Meme";
+import { useGetUserMemesQuery } from "../app/apiSlice";
 
 export function Profile() {
+  const {data: memes} = useGetUserMemesQuery()
   return (
     <div className="flex-container">
       <h2>User Profile</h2>
@@ -21,11 +23,14 @@ export function Profile() {
       <div>
         <h3>User's Recently Created</h3>
         <div className="row g-3 mb-3">
-          <div className="col">
-            <Meme />
-          </div>
+          {memes && memes.map(meme => {
+          return (<div className="col" key={meme.id}>
+            <Meme image={meme.meme_url}/>
+          </div>)})}
         </div>
       </div>
     </div>
   );
+
+
 }
