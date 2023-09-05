@@ -104,6 +104,29 @@ export const memeApi = createApi({
           method: "POST"
         }
       },
+      invalidatesTags: ["Likes"]
+    }),
+
+    getLikes: builder.query({
+      query: () => {
+        return {
+          url: "/api/likes/mine",
+          credentials: "include"
+        }
+      },
+      transformResponse: (likes) => likes.likes,
+      providesTags: ["Likes"]
+    }),
+
+    unlike: builder.mutation({
+      query: (input) => {
+        return {
+          url: `/api/likes/${input.like_id}`,
+          method: "DELETE",
+          credentials: "include"
+        }
+      },
+      invalidatesTags: ["Likes"]
     })
 
   }),
@@ -119,4 +142,6 @@ export const {
   useCreateMemeMutation,
   useGetUserMemesQuery,
   useCreateLikeMutation,
+  useGetLikesQuery,
+  useUnlikeMutation
 } = memeApi;
