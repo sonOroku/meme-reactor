@@ -9,7 +9,13 @@ export const memeApi = createApi({
   endpoints: (builder) => ({
     getAllMemes: builder.query({
       query: () => "/api/memes",
-      providesTags: ["Memes"],
+      providesTags: [{id: "All", type: "Memes"}],
+      transformResponse: (memes) => {
+        if(memes){
+        memes.sort((a, b) => new Date(b["created_at"]) - new Date(a["created_at"]))
+        }
+        return memes
+      }
     }),
 
     login: builder.mutation({
@@ -88,6 +94,7 @@ export const memeApi = createApi({
           credentials: "include",
         }
       },
+      providesTags: [{id: "Mine", type: "Memes"}],
       transformResponse: (memes) => {
         if(memes){
         memes.sort((a, b) => new Date(b["created_at"]) - new Date(a["created_at"]))
