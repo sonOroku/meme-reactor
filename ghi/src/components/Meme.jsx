@@ -1,7 +1,14 @@
 import React from "react";
+import { useCreateLikeMutation } from "../app/apiSlice";
 
-export function Meme({ image }) {
-  console.log(image);
+export function Meme({ image, meme_id }) {
+  const [like] = useCreateLikeMutation()
+  const handleLike = (event) => {
+    const value = event.target.value
+    if (value) {
+      like({meme_id: value})
+    }
+  }
   return (
     <div className="meme-container">
       {image ? (
@@ -14,6 +21,8 @@ export function Meme({ image }) {
           alt="placeholder"
         />
       )}
+      <button value={meme_id} onClick={handleLike}>like</button>
+      <button>unlike</button>
     </div>
   );
 }

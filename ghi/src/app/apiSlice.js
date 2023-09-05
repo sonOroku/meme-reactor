@@ -94,6 +94,16 @@ export const memeApi = createApi({
         }
         return memes
       }
+    }),
+
+    createLike: builder.mutation({
+      query: (input) => {
+        return {
+          url: `/api/memes/${input.meme_id}/likes`,
+          credentials: "include",
+          method: "POST"
+        }
+      },
     })
 
   }),
@@ -108,4 +118,5 @@ export const {
   useGetTemplatesQuery,
   useCreateMemeMutation,
   useGetUserMemesQuery,
+  useCreateLikeMutation,
 } = memeApi;

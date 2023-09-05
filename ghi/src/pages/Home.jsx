@@ -11,13 +11,13 @@ export function Home() {
         memes.map((meme) => {
           return (
             <div key={meme.id}>
-              <Meme image={meme.meme_url} />
+              <Meme image={meme.meme_url} meme_id={meme.id}/>
             </div>
           );
         })
       ) : (
         <div>
-          <Meme image={null} />
+          <Meme image={null} meme_id={null} />
         </div>
       )}
     </div>

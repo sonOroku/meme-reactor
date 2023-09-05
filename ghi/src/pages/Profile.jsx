@@ -25,7 +25,7 @@ export function Profile() {
         <div className="row g-3 mb-3">
           {memes && memes.map(meme => {
           return (<div className="col" key={meme.id}>
-            <Meme image={meme.meme_url}/>
+            <Meme image={meme.meme_url} meme_id={meme.id}/>
           </div>)})}
         </div>
       </div>
