@@ -9,6 +9,7 @@ import { Login } from "./pages/Login";
 import { Profile } from "./pages/Profile";
 import { SignUp } from "./pages/SignUp";
 import { Error } from "./pages/Error";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
   const domain = /https:\/\/[^/]+/;

@@ -3,14 +3,13 @@ import {
   useCreateLikeMutation,
   useGetTokenQuery,
   useUnlikeMutation,
-  useDeleteMemeMutation,
 } from "../app/apiSlice";
+import DialogBox from "./DialogBox";
 
 export function Meme({ image, meme_id, like_id }) {
   const [like] = useCreateLikeMutation();
   const { data: token } = useGetTokenQuery();
   const [unlike] = useUnlikeMutation();
-  const [deleteMeme] = useDeleteMemeMutation();
 
   const handleLike = (event) => {
     const value = event.target.value;
@@ -23,13 +22,6 @@ export function Meme({ image, meme_id, like_id }) {
     const value = event.target.value;
     if (value) {
       unlike({ like_id: value });
-    }
-  };
-
-  const handleDelete = (event) => {
-    const value = event.target.value;
-    if (value) {
-      deleteMeme({ meme_id: value });
     }
   };
 
@@ -46,21 +38,25 @@ export function Meme({ image, meme_id, like_id }) {
         />
       )}
 
-      {image && token && (
-        <button value={meme_id} onClick={handleDelete}>
-          delete
-        </button>
-      )}
+      {image && token && <DialogBox meme_id={meme_id} />}
 
       {image && token && !like_id && (
-        <button value={meme_id} onClick={handleLike}>
-          like
+        <button
+          className="btn btn-primary"
+          value={meme_id}
+          onClick={handleLike}
+        >
+          Like
         </button>
       )}
 
       {image && token && like_id && (
-        <button value={like_id} onClick={handleUnlike}>
-          unlike
+        <button
+          className="btn btn-warning"
+          value={like_id}
+          onClick={handleUnlike}
+        >
+          Unlike
         </button>
       )}
     </div>
