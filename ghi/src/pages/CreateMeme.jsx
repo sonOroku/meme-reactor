@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useGetTemplatesQuery, useCreateMemeMutation } from "../app/apiSlice";
 import { useNavigate } from "react-router-dom";
 
+const placeholder =
+  "https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png";
+
 export function CreateMeme() {
   const [template_id, setTemplateId] = useState("");
   const [text0, setText0] = useState("");
@@ -9,9 +12,7 @@ export function CreateMeme() {
   const { data: templates } = useGetTemplatesQuery();
   const [meme] = useCreateMemeMutation();
   const navigate = useNavigate();
-  const [source, setSource] = useState(
-    "https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
-  );
+  const [source, setSource] = useState(placeholder);
   const handleSelect = (e) => {
     const value = e.target.value;
     const temp = value.split(",");
@@ -32,9 +33,7 @@ export function CreateMeme() {
     setTemplateId("");
     setText0("");
     setText1("");
-    setSource(
-      "https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
-    );
+    setSource(placeholder);
   };
   return (
     <div className="row">
@@ -50,18 +49,20 @@ export function CreateMeme() {
                 </div>
                 <div className="col">
                   <select
-                    value={[template_id, source]}
+                    value={`${template_id},${source}`}
                     onChange={handleSelect}
                     className="mb-3 w-100"
                     id="template-id"
                   >
-                    <option>Select a template</option>
+                    <option value={`placeholder,${placeholder}`}>
+                      Select a template
+                    </option>
                     {templates &&
                       templates.map((template) => {
                         return (
                           <option
                             key={template.id}
-                            value={[template.id, template.url]}
+                            value={`${template.id},${template.url}`}
                           >
                             {template.name}
                           </option>
