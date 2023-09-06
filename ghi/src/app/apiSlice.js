@@ -25,9 +25,9 @@ export const memeApi = createApi({
         return {
           url: `/api/memes/${meme_id}`,
           credentials: "include",
-        }
+        };
       },
-      providesTags: [{id: "One", type: "Memes"}]
+      providesTags: [{ id: "One", type: "Memes" }],
     }),
 
     login: builder.mutation({
@@ -130,6 +130,17 @@ export const memeApi = createApi({
       },
     }),
 
+    deleteMeme: builder.mutation({
+      query: (input) => {
+        return {
+          url: `/api/memes/${input.meme_id}`,
+          method: "DELETE",
+          credentials: "include",
+        };
+      },
+      invalidatesTags: ["Memes"],
+    }),
+
     createLike: builder.mutation({
       query: (input) => {
         return {
@@ -149,7 +160,7 @@ export const memeApi = createApi({
         };
       },
       transformResponse: (likes) => {
-        const myLikes = likes.likes
+        const myLikes = likes.likes;
         if (myLikes) {
           myLikes.sort(
             (a, b) => new Date(b["liked_at"]) - new Date(a["liked_at"])
@@ -186,4 +197,5 @@ export const {
   useGetLikesQuery,
   useUnlikeMutation,
   useGetMemeQuery,
+  useDeleteMemeMutation,
 } = memeApi;
