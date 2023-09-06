@@ -12,7 +12,14 @@ code {
     monospace;
 }
 
-#meme-preview-container {
-  margin: 10px;
-  border-radius: 30px;
+#meme-preview {
+  align-self: center;
+  width: 400px;
+  margin: 16px 0;
+}
+
+.meme-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }

@@ -9,13 +9,15 @@ export const memeApi = createApi({
   endpoints: (builder) => ({
     getAllMemes: builder.query({
       query: () => "/api/memes",
-      providesTags: [{id: "All", type: "Memes"}],
+      providesTags: [{ id: "All", type: "Memes" }],
       transformResponse: (memes) => {
-        if(memes){
-        memes.sort((a, b) => new Date(b["created_at"]) - new Date(a["created_at"]))
+        if (memes) {
+          memes.sort(
+            (a, b) => new Date(b["created_at"]) - new Date(a["created_at"])
+          );
         }
-        return memes
-      }
+        return memes;
+      },
     }),
 
     login: builder.mutation({
@@ -67,24 +69,37 @@ export const memeApi = createApi({
     }),
 
     getTemplates: builder.query({
-        query: () => {
-            return {
-                url: "/api/memes/templates",
-                credentials: "include",
-            }
-        }
+      query: () => {
+        return {
+          url: "/api/memes/templates",
+          credentials: "include",
+        };
+      },
+      transformResponse: (response) =>
+        response.sort((a, b) => {
+          const nameA = a.name.toLowerCase(); // Convert names to lowercase for case-insensitive sorting
+          const nameB = b.name.toLowerCase();
+
+          if (nameA < nameB) {
+            return -1; // a should come before b in the sorted order
+          } else if (nameA > nameB) {
+            return 1; // a should come after b in the sorted order
+          } else {
+            return 0; // names are equal
+          }
+        }),
     }),
 
     createMeme: builder.mutation({
-        query: (input) => {
-            return {
-                url: "/api/memes",
-                method: "POST",
-                body: input,
-                credentials: "include",
-            }
-        },
-        invalidatesTags: ["Memes"]
+      query: (input) => {
+        return {
+          url: "/api/memes",
+          method: "POST",
+          body: input,
+          credentials: "include",
+        };
+      },
+      invalidatesTags: ["Memes"],
     }),
 
     getUserMemes: builder.query({
@@ -92,15 +107,17 @@ export const memeApi = createApi({
         return {
           url: "/api/memes/mine",
           credentials: "include",
-        }
+        };
       },
-      providesTags: [{id: "Mine", type: "Memes"}],
+      providesTags: [{ id: "Mine", type: "Memes" }],
       transformResponse: (memes) => {
-        if(memes){
-        memes.sort((a, b) => new Date(b["created_at"]) - new Date(a["created_at"]))
+        if (memes) {
+          memes.sort(
+            (a, b) => new Date(b["created_at"]) - new Date(a["created_at"])
+          );
         }
-        return memes
-      }
+        return memes;
+      },
     }),
 
     createLike: builder.mutation({
@@ -108,21 +125,21 @@ export const memeApi = createApi({
         return {
           url: `/api/memes/${input.meme_id}/likes`,
           credentials: "include",
-          method: "POST"
-        }
+          method: "POST",
+        };
       },
-      invalidatesTags: ["Likes"]
+      invalidatesTags: ["Likes"],
     }),
 
     getLikes: builder.query({
       query: () => {
         return {
           url: "/api/likes/mine",
-          credentials: "include"
-        }
+          credentials: "include",
+        };
       },
       transformResponse: (likes) => likes.likes,
-      providesTags: ["Likes"]
+      providesTags: ["Likes"],
     }),
 
     unlike: builder.mutation({
@@ -130,12 +147,11 @@ export const memeApi = createApi({
         return {
           url: `/api/likes/${input.like_id}`,
           method: "DELETE",
-          credentials: "include"
-        }
+          credentials: "include",
+        };
       },
-      invalidatesTags: ["Likes"]
-    })
-
+      invalidatesTags: ["Likes"],
+    }),
   }),
 });
 
@@ -150,5 +166,5 @@ export const {
   useGetUserMemesQuery,
   useCreateLikeMutation,
   useGetLikesQuery,
-  useUnlikeMutation
+  useUnlikeMutation,
 } = memeApi;
