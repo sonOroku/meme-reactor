@@ -20,6 +20,16 @@ export const memeApi = createApi({
       },
     }),
 
+    getMeme: builder.query({
+      query: (meme_id) => {
+        return {
+          url: `/api/memes/${meme_id}`,
+          credentials: "include",
+        }
+      },
+      providesTags: [{id: "One", type: "Memes"}]
+    }),
+
     login: builder.mutation({
       query: (input) => {
         const formData = new FormData();
@@ -138,7 +148,15 @@ export const memeApi = createApi({
           credentials: "include",
         };
       },
-      transformResponse: (likes) => likes.likes,
+      transformResponse: (likes) => {
+        const myLikes = likes.likes
+        if (myLikes) {
+          myLikes.sort(
+            (a, b) => new Date(b["liked_at"]) - new Date(a["liked_at"])
+          );
+          return myLikes;
+        }
+      },
       providesTags: ["Likes"],
     }),
 
@@ -150,7 +168,7 @@ export const memeApi = createApi({
           credentials: "include",
         };
       },
-      invalidatesTags: ["Likes"],
+      invalidatesTags: ["Likes", "Memes"],
     }),
   }),
 });
@@ -167,4 +185,5 @@ export const {
   useCreateLikeMutation,
   useGetLikesQuery,
   useUnlikeMutation,
+  useGetMemeQuery,
 } = memeApi;
