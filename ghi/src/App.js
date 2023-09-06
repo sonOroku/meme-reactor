@@ -12,7 +12,7 @@ import { Error } from "./pages/Error";
 
 export default function App() {
   const domain = /https:\/\/[^/]+/;
-  const basename = process.env.PUBLIC_URL.replace(domain, '')
+  const basename = process.env.PUBLIC_URL.replace(domain, "");
   return (
     <div className="app">
       <BrowserRouter basename={basename}>
