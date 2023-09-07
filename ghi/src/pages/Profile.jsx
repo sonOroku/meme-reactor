@@ -3,13 +3,12 @@ import { Meme } from "../components/Meme";
 import {
   useGetUserMemesQuery,
   useGetLikesQuery,
-  useGetMemeQuery,
 } from "../app/apiSlice";
 import LikedMemes from "../components/LikedMemes";
 
 export function Profile() {
   const { data: memes } = useGetUserMemesQuery();
-  const { data: likes, isLoading } = useGetLikesQuery();
+  const { data: likes } = useGetLikesQuery();
   return (
     <div className="column">
       <h2>User Profile</h2>

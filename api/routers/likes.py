@@ -58,3 +58,11 @@ def get_all_likes(
     repo: LikeRepo = Depends(),
 ):
     return repo.get_likes()
+
+
+@router.get("/api/memes/{meme_id}/likes", response_model=LikesList)
+def get_meme_likes(
+    meme_id: str,
+    repo: LikeRepo = Depends(),
+):
+    return repo.get_meme_likes(meme_id)

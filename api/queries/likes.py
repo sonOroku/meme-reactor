@@ -46,3 +46,11 @@ class LikeRepo(GenRepo):
                 item["id"] = str(item["_id"])
                 likes.append(item)
         return {"likes": likes}
+
+    def get_meme_likes(self, meme_id: str):
+        likes = []
+        result = self.collection.find({"meme_id": meme_id})
+        for item in result:
+            item["id"] = str(item["_id"])
+            likes.append(item)
+        return {"likes": likes}
