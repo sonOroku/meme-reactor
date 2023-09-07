@@ -26,7 +26,7 @@ export function Meme({ image, meme_id, like_id }) {
   };
 
   return (
-    <div className="meme-container">
+    <div class="card shadow m-1">
       {image ? (
         <img width="400" height="300" src={image} alt="placeholder" />
       ) : (
@@ -37,28 +37,33 @@ export function Meme({ image, meme_id, like_id }) {
           alt="placeholder"
         />
       )}
+      <div class="card-body shadow">
+        <div className="meme-container">
+          <div className="d-flex flex-row justify-content-between w-100">
+            {image && token && !like_id && (
+              <button
+                className="btn btn-success"
+                value={meme_id}
+                onClick={handleLike}
+              >
+                Like
+              </button>
+            )}
 
-      {image && token && <DialogBox meme_id={meme_id} />}
+            {image && token && like_id && (
+              <button
+                className="btn btn-warning"
+                value={like_id}
+                onClick={handleUnlike}
+              >
+                Unlike
+              </button>
+            )}
 
-      {image && token && !like_id && (
-        <button
-          className="btn btn-primary"
-          value={meme_id}
-          onClick={handleLike}
-        >
-          Like
-        </button>
-      )}
-
-      {image && token && like_id && (
-        <button
-          className="btn btn-warning"
-          value={like_id}
-          onClick={handleUnlike}
-        >
-          Unlike
-        </button>
-      )}
+            {image && token && <DialogBox meme_id={meme_id} />}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -34,7 +34,7 @@ function DialogBox(meme_id) {
             No, keep meme.
           </Button>
           <Button
-            variant="primary"
+            variant="danger"
             onClick={handleDelete}
             value={meme_id.meme_id}
           >
