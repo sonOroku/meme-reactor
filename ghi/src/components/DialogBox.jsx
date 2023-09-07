@@ -19,7 +19,7 @@ function DialogBox(meme_id) {
   return (
     <>
       <Button variant="danger" onClick={handleShow}>
-        Delete Meme
+        Delete
       </Button>
 
       <Modal show={show} onHide={handleClose}>

@@ -1,5 +1,6 @@
 from queries.client import GenRepo
-from models import AccountIn, AccountWithHashPassword
+from models import AccountIn, AccountWithHashPassword, AccountOut
+from bson import ObjectId
 
 
 class DuplicateAccountError(ValueError):
@@ -26,3 +27,10 @@ class AccountRepo(GenRepo):
             return None
         account["id"] = str(account["_id"])
         return AccountWithHashPassword(**account)
+
+    def get_user_by_id(self, user_id: str):
+        account = self.collection.find_one({"_id": ObjectId(user_id)})
+        if account is None:
+            return None
+        account["id"] = str(account["_id"])
+        return AccountOut(**account)

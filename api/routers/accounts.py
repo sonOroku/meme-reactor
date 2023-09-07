@@ -8,7 +8,7 @@ from fastapi import (
 )
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
-
+from bson.errors import InvalidId
 from pydantic import BaseModel
 from models import AccountIn, AccountOut
 from queries.accounts import (
@@ -64,3 +64,15 @@ async def get_token(
             "type": "Bearer",
             "account": account,
         }
+
+
+@router.get("/api/accounts/{user_id}", response_model=AccountOut | None)
+def get_account(
+    user_id: str,
+    repo: AccountRepo = Depends(),
+):
+    try:
+        user = repo.get_user_by_id(user_id)
+        return user
+    except InvalidId:
+        raise HTTPException(status_code=406, detail="Invalid ID")

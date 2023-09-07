@@ -65,4 +65,8 @@ def get_meme_likes(
     meme_id: str,
     repo: LikeRepo = Depends(),
 ):
-    return repo.get_meme_likes(meme_id)
+    try:
+        likes = repo.get_meme_likes(meme_id)
+        return likes
+    except InvalidId:
+        raise HTTPException(status_code=406, detail="Invalid ID")
