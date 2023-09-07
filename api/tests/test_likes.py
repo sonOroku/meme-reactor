@@ -37,18 +37,30 @@ class FakeLikeRepo:
     def delete_like(self, like_id: str):
         return True
 
-    def get_likes(self, user_id):
+    def get_likes(self, user_id: str = None):
         liked_at = datetime(2023, 8, 22, 20, 51, 45, 52000)
-        return {
-            "likes": [
-                {
-                    "id": "64e51fe1027d69cadbccebfc",
-                    "user_id": user_id,
-                    "meme_id": "64e3e5b92ad42415b912423f",
-                    "liked_at": liked_at,
-                }
-            ]
-        }
+        if user_id:
+            return {
+                "likes": [
+                    {
+                        "id": "64e51fe1027d69cadbccebfc",
+                        "user_id": user_id,
+                        "meme_id": "64e3e5b92ad42415b912423f",
+                        "liked_at": liked_at,
+                    }
+                ]
+            }
+        else:
+            return {
+                "likes": [
+                    {
+                        "id": "64e51fe1027d69cadbccebfc",
+                        "user_id": "64e3d31e885b5610c5d2c496",
+                        "meme_id": "64e3e5b92ad42415b912423f",
+                        "liked_at": liked_at,
+                    }
+                ]
+            }
 
 
 def test_create_like():
@@ -88,6 +100,24 @@ def test_liked_memes():
     app.dependency_overrides[LikeRepo] = FakeLikeRepo
 
     response = client.get("/api/likes/mine")
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "likes": [
+            {
+                "id": "64e51fe1027d69cadbccebfc",
+                "user_id": "64e3d31e885b5610c5d2c496",
+                "meme_id": "64e3e5b92ad42415b912423f",
+                "liked_at": "2023-08-22T20:51:45.052000",
+            }
+        ]
+    }
+
+
+def test_get_all_likes():
+    app.dependency_overrides[LikeRepo] = FakeLikeRepo
+
+    response = client.get("/api/likes")
 
     assert response.status_code == 200
     assert response.json() == {
