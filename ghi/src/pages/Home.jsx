@@ -25,13 +25,14 @@ export function Home() {
                   image={meme.meme_url}
                   meme_id={meme.id}
                   like_id={like_id}
+                  user_id={meme.created_by}
                 />
               </div>
             );
           })
         ) : (
           <div>
-            <Meme image={null} meme_id={null} like_id={null} />
+            <p>So empty... Create a meme!</p>
           </div>
         )}
       </div>

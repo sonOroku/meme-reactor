@@ -27,7 +27,7 @@ export function Profile() {
             })
           ) : (
             <div className="col-auto">
-              <Meme image={null} meme_id={null} like_id={null} />
+              <p>You haven't liked any memes...</p>
             </div>
           )}
         </div>
@@ -52,13 +52,14 @@ export function Profile() {
                     image={meme.meme_url}
                     meme_id={meme.id}
                     like_id={like_id}
+                    user_id={meme.created_by}
                   />
                 </div>
               );
             })
           ) : (
             <div className="col-auto">
-              <Meme image={null} meme_id={null} like_id={null} />
+              <p>You have not yet created any memes...</p>
             </div>
           )}
         </div>

@@ -78,6 +78,14 @@ export const memeApi = createApi({
       invalidatesTags: ["Token", "Likes"],
     }),
 
+    getUser: builder.query({
+      query: (user_id) => {
+        return {
+          url: `/api/accounts/${user_id}`
+          }
+        },
+    }),
+
     getTemplates: builder.query({
       query: () => {
         return {
@@ -208,4 +216,5 @@ export const {
   useGetMemeQuery,
   useDeleteMemeMutation,
   useGetMemeLikesQuery,
+  useGetUserQuery,
 } = memeApi;

@@ -16,6 +16,7 @@ export default function LikedMemes({meme_id, like_id}) {
                         image={meme.meme_url}
                         meme_id={meme.id}
                         like_id={like_id}
+                        user_id={meme.created_by}
                     />
                     </div>
         )
