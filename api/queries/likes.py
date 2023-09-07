@@ -34,10 +34,15 @@ class LikeRepo(GenRepo):
 
         return result.deleted_count > 0
 
-    def get_likes(self, user_id: str):
+    def get_likes(self, user_id: str = None):
         likes = []
-        result = self.collection.find({"user_id": user_id})
-        for item in result:
-            item["id"] = str(item["_id"])
-            likes.append(item)
+        if user_id is not None:
+            result = self.collection.find({"user_id": user_id})
+            for item in result:
+                item["id"] = str(item["_id"])
+                likes.append(item)
+        else:
+            for item in self.collection.find():
+                item["id"] = str(item["_id"])
+                likes.append(item)
         return {"likes": likes}
