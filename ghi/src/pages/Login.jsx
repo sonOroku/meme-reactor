@@ -24,7 +24,7 @@ export function Login() {
   return (
     <div className="row">
       <div className="offset-3 col-6">
-        <div className="shadow p-4 mt-5">
+        <div className="shadow p-4 mt-5 bg-white">
           <h2>Login</h2>
           {errorMessage && (
             <div className="alert alert-warning" role="alert">
