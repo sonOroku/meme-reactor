@@ -14,6 +14,10 @@ export function SignUp() {
   useEffect(() => {
     if (signUpResponse.isSuccess) {
       navigate("/");
+    } else {
+      setErrorMessage(
+        "This username is already in use. Please try another one."
+      );
     }
   }, [signUpResponse]);
 
@@ -21,7 +25,6 @@ export function SignUp() {
     event.preventDefault();
     if (password === passwordConfirmation) {
       signUp({ username, email, password });
-      navigate("/");
     } else {
       setErrorMessage("Password and Password Confirmation do not match");
     }

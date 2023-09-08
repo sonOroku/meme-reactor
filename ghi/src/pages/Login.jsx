@@ -13,7 +13,7 @@ export function Login() {
     if (loginResponse.isSuccess) {
       navigate("/");
     } else if (loginResponse.isError) {
-      console.log(loginResponse);
+      setErrorMessage(loginResponse.error.data.detail);
     }
   }, [loginResponse]);
 

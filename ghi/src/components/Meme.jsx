@@ -41,7 +41,7 @@ export function Meme({ image, meme_id, like_id, user_id }) {
           <div className="d-flex flex-row justify-content-between w-100">
             {image && token && !like_id && (
               <button
-                className="btn btn-success"
+                className="btn btn-primary"
                 value={meme_id}
                 onClick={handleLike}
               >
@@ -51,7 +51,7 @@ export function Meme({ image, meme_id, like_id, user_id }) {
 
             {image && token && like_id && (
               <button
-                className="btn btn-warning"
+                className="btn btn-secondary"
                 value={like_id}
                 onClick={handleUnlike}
               >
