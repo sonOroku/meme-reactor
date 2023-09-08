@@ -9,6 +9,7 @@ export function SignUp() {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [signUp, signUpResponse] = useSignUpMutation();
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (signUpResponse.isSuccess) {
@@ -22,7 +23,7 @@ export function SignUp() {
       signUp({ username, email, password });
       navigate("/");
     } else {
-      console.error("Password and Password Confirmation do not match");
+      setErrorMessage("Password and Password Confirmation do not match");
     }
   };
 
@@ -31,7 +32,11 @@ export function SignUp() {
       <div className="offset-3 col-6">
         <div className="shadow p-4 mt-5">
           <h2>Sign Up</h2>
-
+          {errorMessage && (
+            <div className="alert alert-warning" role="alert">
+              {errorMessage}
+            </div>
+          )}
           <form onSubmit={handleSubmit}>
             <div className="row mb-3">
               <label htmlFor="username">Username</label>

@@ -7,10 +7,13 @@ export function Login() {
   const [password, setPassword] = useState("");
   const [login, loginResponse] = useLoginMutation();
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (loginResponse.isSuccess) {
       navigate("/");
+    } else if (loginResponse.isError) {
+      console.log(loginResponse);
     }
   }, [loginResponse]);
 
@@ -23,7 +26,11 @@ export function Login() {
       <div className="offset-3 col-6">
         <div className="shadow p-4 mt-5">
           <h2>Login</h2>
-
+          {errorMessage && (
+            <div className="alert alert-warning" role="alert">
+              {errorMessage}
+            </div>
+          )}
           <form onSubmit={handleSubmit}>
             <div className="row mb-3">
               <label htmlFor="username">Username</label>

@@ -15,7 +15,7 @@ function MemeModal({ image }) {
         alt="meme"
       />
 
-      <Modal size="lg" show={show} onHide={handleClose}>
+      <Modal size="xl" show={show} onHide={handleClose}>
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body
           className="d-flex justify-content-center align-items-center"
