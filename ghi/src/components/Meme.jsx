@@ -29,7 +29,7 @@ export function Meme({ image, meme_id, user_id }) {
                 ? "person likes this"
                 : "people like this"}
             </div>
-            {token.username === user.username && image && token && (
+            {image && token && user && token.username === user.username && (
               <DialogBox meme_id={meme_id} />
             )}
           </div>
