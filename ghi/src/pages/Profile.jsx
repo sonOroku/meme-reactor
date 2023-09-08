@@ -6,6 +6,7 @@ import {
   useGetTokenQuery,
 } from "../app/apiSlice";
 import LikedMemes from "../components/LikedMemes";
+import { Link } from "react-router-dom";
 
 export function Profile() {
   const { data: memes } = useGetUserMemesQuery();
@@ -14,13 +15,18 @@ export function Profile() {
 
   return (
     <div className="column">
-      <h2 className="mt-3">{token ? token.username : "User"} Profile</h2>
+      <h2 className="mt-3">{token ? token.username : "User"}'s Profile</h2>
 
       <div>
-        <h3 className="m-4">User's Recently Liked</h3>
+        <h3 className="m-4">
+          {token ? token.username : "User"}'s Recently Liked Memes{" "}
+          <small>
+            <Link to="/liked">See More</Link>
+          </small>{" "}
+        </h3>
         <div className="d-flex flex-row flex-wrap gap-6">
           {likes && likes.length ? (
-            likes.map((like) => {
+            likes.slice(0, 3).map((like) => {
               const like_id = like.id;
               return (
                 <div key={like_id}>
@@ -37,10 +43,15 @@ export function Profile() {
       </div>
 
       <div>
-        <h3 className="m-4">User's Recently Created</h3>
+        <h3 className="m-4">
+          {token ? token.username : "User"}'s Recently Created Memes{" "}
+          <small>
+            <Link to="/created">See More</Link>
+          </small>
+        </h3>
         <div className="d-flex flex-row flex-wrap gap-6">
           {memes && memes.length ? (
-            memes.map((meme) => {
+            memes.slice(0, 3).map((meme) => {
               let like_id = null;
               if (likes) {
                 const my_like = likes.find((like) => meme.id === like.meme_id);
