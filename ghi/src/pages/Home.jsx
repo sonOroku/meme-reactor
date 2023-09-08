@@ -8,7 +8,7 @@ export function Home() {
 
   return (
     <div className="column">
-      <h2>Meme Reactor - Home Page</h2>
+      <h2 className="mt-3">Meme Reactor - Home Page</h2>
       <div className="d-flex flex-row flex-wrap gap-6">
         {memes && memes.length ? (
           memes.map((meme) => {

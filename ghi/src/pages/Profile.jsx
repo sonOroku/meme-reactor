@@ -3,18 +3,21 @@ import { Meme } from "../components/Meme";
 import {
   useGetUserMemesQuery,
   useGetLikesQuery,
+  useGetTokenQuery,
 } from "../app/apiSlice";
 import LikedMemes from "../components/LikedMemes";
 
 export function Profile() {
   const { data: memes } = useGetUserMemesQuery();
   const { data: likes } = useGetLikesQuery();
+  const { data: token } = useGetTokenQuery();
+
   return (
     <div className="column">
-      <h2>User Profile</h2>
+      <h2 className="mt-3">{token ? token.username : "User"} Profile</h2>
 
       <div>
-        <h3>User's Recently Liked</h3>
+        <h3 className="m-4">User's Recently Liked</h3>
         <div className="d-flex flex-row flex-wrap gap-6">
           {likes && likes.length ? (
             likes.map((like) => {
@@ -34,7 +37,7 @@ export function Profile() {
       </div>
 
       <div>
-        <h3>User's Recently Created</h3>
+        <h3 className="m-4">User's Recently Created</h3>
         <div className="d-flex flex-row flex-wrap gap-6">
           {memes && memes.length ? (
             memes.map((meme) => {

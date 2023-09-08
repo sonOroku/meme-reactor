@@ -81,9 +81,9 @@ export const memeApi = createApi({
     getUser: builder.query({
       query: (user_id) => {
         return {
-          url: `/api/accounts/${user_id}`
-          }
-        },
+          url: `/api/accounts/${user_id}`,
+        };
+      },
     }),
 
     getTemplates: builder.query({
@@ -95,15 +95,15 @@ export const memeApi = createApi({
       },
       transformResponse: (response) =>
         response.sort((a, b) => {
-          const nameA = a.name.toLowerCase(); // Convert names to lowercase for case-insensitive sorting
+          const nameA = a.name.toLowerCase();
           const nameB = b.name.toLowerCase();
 
           if (nameA < nameB) {
-            return -1; // a should come before b in the sorted order
+            return -1;
           } else if (nameA > nameB) {
-            return 1; // a should come after b in the sorted order
+            return 1;
           } else {
-            return 0; // names are equal
+            return 0;
           }
         }),
     }),
@@ -176,7 +176,7 @@ export const memeApi = createApi({
           return myLikes;
         }
       },
-      providesTags: [{id:"Mine", type:"Likes"}],
+      providesTags: [{ id: "Mine", type: "Likes" }],
     }),
 
     getMemeLikes: builder.query({
@@ -185,7 +185,7 @@ export const memeApi = createApi({
         const myLikes = likes.likes;
         return myLikes;
       },
-      providesTags: [{id: "All", type: "Likes"}],
+      providesTags: [{ id: "All", type: "Likes" }],
     }),
 
     unlike: builder.mutation({
