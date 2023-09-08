@@ -1,20 +1,18 @@
 **Meme Reactor**
 
-Ngozi Enuem-Udogu
-Alec O'Rourke
-Brandon Tiernay
-Randall Crandon
+- Ngozi Enuem-Udogu
+- Alec O'Rourke
+- Brandon Tiernay
+- Randall Crandon
 
-Meme Reactor – Radiate meme energy.
-Meme Reactor - A platform for meme enthusiasts.
-Meme Reactor - Where memes come to life.
+Meme Reactor - Where memes go nuclear.
 
 **Design**
 
 - **API Design:** The backend is powered by FastAPI, providing a robust and efficient framework for building APIs.
 - **Data Model:** MongoDB is used as the primary database, ensuring scalability and flexibility.
-- **Frontend:** GHI (based on the docker-compose file) appears to be a frontend service, potentially built with React.
-- **Integrations:** Integrations with various meme-related services and data sources can be listed here.
+- **Frontend:** Single-Page Application (SPA) powered by React and Redux in conjunction with Bootstrap, ensuring a seamless user experience.
+- **Integrations:** Memes are created by using Imgflip's Third-Party API.
 
 **Intended Market**
 Meme Reactor is designed for meme enthusiasts, content creators, and anyone looking to explore and share meme content. Our platform provides a unique experience tailored to the meme culture, bridging the gap between humor, creativity, and community.
