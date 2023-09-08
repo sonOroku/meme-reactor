@@ -33,17 +33,14 @@ To fully enjoy this application on your local machine, please make sure to follo
 1.  Clone the repository down to your local machine.
 2.  CD into the new project directory.
 3.  Create the required docker volumes:
-    bash
     ```bash
     docker volume create mongo-data
     ```
 4.  Build the docker containers:
-    bash
     ```bash
     docker-compose build
     ```
 5.  Run the docker services:
-    bash
     ```bash
     docker-compose up
     ```
