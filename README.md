@@ -22,8 +22,6 @@ Meme Reactor is designed for meme enthusiasts, content creators, and anyone look
 - **Meme Generation and Customization:** Users can create, customize, and share memes.
 - **Database Exploration:** With MongoDB and mongo-express, users can explore and manage meme datasets.
 - **Interactive UI:** A dynamic and responsive user interface ensures a seamless experience across devices.
-- **Social Integration:** Share memes directly to popular social media platforms.
-- (Other functionalities specific to Meme Reactor can be added.)
 
 **Project Initialization**
 To fully enjoy this application on your local machine, please make sure to follow these steps:
