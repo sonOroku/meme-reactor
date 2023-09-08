@@ -30,7 +30,7 @@ export function Profile() {
               const like_id = like.id;
               return (
                 <div key={like_id}>
-                  <LikedMemes meme_id={like.meme_id} like_id={like_id} />
+                  <LikedMemes meme_id={like.meme_id} />
                 </div>
               );
             })
@@ -52,20 +52,11 @@ export function Profile() {
         <div className="d-flex flex-row flex-wrap gap-6">
           {memes && memes.length ? (
             memes.slice(0, 3).map((meme) => {
-              let like_id = null;
-              if (likes) {
-                const my_like = likes.find((like) => meme.id === like.meme_id);
-                if (my_like) {
-                  like_id = my_like.id;
-                }
-              }
-
               return (
                 <div className="col-auto" key={meme.id}>
                   <Meme
                     image={meme.meme_url}
                     meme_id={meme.id}
-                    like_id={like_id}
                     user_id={meme.created_by}
                   />
                 </div>

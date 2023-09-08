@@ -1,18 +1,28 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useDeleteMemeMutation } from "../app/apiSlice";
+import {
+  useDeleteMemeMutation,
+  useGetLikesQuery,
+  useUnlikeMutation,
+} from "../app/apiSlice";
 
 function DialogBox(meme_id) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [deleteMeme] = useDeleteMemeMutation();
+  const { data: likes } = useGetLikesQuery();
+  const [deleteLike] = useUnlikeMutation();
 
-  const handleDelete = (event) => {
+  const handleDelete = async (event) => {
     const value = event.target.value;
     if (value) {
-      deleteMeme({ meme_id: value });
+      const matchLikes = likes.filter((like) => like.meme_id === value);
+      for (let match of matchLikes) {
+        await deleteLike({ like_id: match.id }).unwrap();
+      }
+      await deleteMeme({ meme_id: value }).unwrap();
     }
   };
 
