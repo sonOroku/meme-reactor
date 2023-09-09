@@ -12,12 +12,12 @@ export function SignUp() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    if (signUpResponse.isSuccess) {
-      navigate("/");
-    } else {
+    if (signUpResponse.isError) {
       setErrorMessage(
         "This username is already in use. Please try another one."
       );
+    } else if (signUpResponse.isSuccess) {
+      navigate("/");
     }
   }, [signUpResponse]);
 
