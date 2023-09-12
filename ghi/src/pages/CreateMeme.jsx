@@ -1,5 +1,9 @@
-import React, { useState } from "react";
-import { useGetTemplatesQuery, useCreateMemeMutation } from "../app/apiSlice";
+import React, { useState, useEffect } from "react";
+import {
+  useGetTemplatesQuery,
+  useCreateMemeMutation,
+  useLogoutMutation,
+} from "../app/apiSlice";
 import { useNavigate } from "react-router-dom";
 
 const placeholder =
@@ -7,9 +11,10 @@ const placeholder =
 
 export function CreateMeme() {
   const [template_id, setTemplateId] = useState("");
-  const { data: templates } = useGetTemplatesQuery();
+  const { data: templates, error } = useGetTemplatesQuery();
   const [meme] = useCreateMemeMutation();
   const navigate = useNavigate();
+  const [logout] = useLogoutMutation();
   const [source, setSource] = useState(placeholder);
   const [boxes, setBoxes] = useState({ 0: "", 1: "" });
   const [box_count, setBoxCount] = useState(2);
@@ -41,6 +46,14 @@ export function CreateMeme() {
     setBoxCount(2);
     setSource(placeholder);
   };
+
+  useEffect(() => {
+    if (error && error.status === 401) {
+      logout();
+      navigate("/login");
+    }
+  }, []);
+
   return (
     <div className="row">
       <div className="offset-3 col-6">

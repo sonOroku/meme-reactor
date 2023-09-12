@@ -1,11 +1,24 @@
-import React from "react";
-import { useGetLikesQuery, useGetTokenQuery } from "../app/apiSlice";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  useGetLikesQuery,
+  useGetTokenQuery,
+  useLogoutMutation,
+} from "../app/apiSlice";
 import LikedMemes from "../components/LikedMemes";
 
 export function Liked() {
-  const { data: likes } = useGetLikesQuery();
+  const { data: likes, error } = useGetLikesQuery();
   const { data: token } = useGetTokenQuery();
+  const [logout] = useLogoutMutation();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (error && error.status === 401) {
+      logout();
+      navigate("/login");
+    }
+  }, []);
   return (
     <div className="column">
       <div>
