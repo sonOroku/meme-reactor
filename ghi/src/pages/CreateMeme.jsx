@@ -7,32 +7,38 @@ const placeholder =
 
 export function CreateMeme() {
   const [template_id, setTemplateId] = useState("");
-  const [text0, setText0] = useState("");
-  const [text1, setText1] = useState("");
   const { data: templates } = useGetTemplatesQuery();
   const [meme] = useCreateMemeMutation();
   const navigate = useNavigate();
   const [source, setSource] = useState(placeholder);
+  const [boxes, setBoxes] = useState({ 0: "", 1: "" });
+  const [box_count, setBoxCount] = useState(2);
+
   const handleSelect = (e) => {
     const value = e.target.value;
     const temp = value.split(",");
     setTemplateId(temp[0]);
     setSource(temp[1]);
+    setBoxCount(temp[2]);
+    const temp_list = {};
+    for (let i = 0; i < temp[2]; i++) {
+      temp_list[i] = "";
+    }
+    setBoxes(temp_list);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
     const info = {
       template_id,
-      text0,
-      text1,
+      boxes: Object.values(boxes),
     };
     meme(info);
     navigate("/profile");
   };
   const handleReset = (e) => {
     setTemplateId("");
-    setText0("");
-    setText1("");
+    setBoxes({ 0: "", 1: "" });
+    setBoxCount(2);
     setSource(placeholder);
   };
   return (
@@ -49,12 +55,12 @@ export function CreateMeme() {
                 </div>
                 <div className="col">
                   <select
-                    value={`${template_id},${source}`}
+                    value={`${template_id},${source},${box_count}`}
                     onChange={handleSelect}
                     className="mb-3 w-100"
                     id="template-id"
                   >
-                    <option value={`placeholder,${placeholder}`}>
+                    <option value={`placeholder,${placeholder},${box_count}`}>
                       Select a template
                     </option>
                     {templates &&
@@ -62,7 +68,7 @@ export function CreateMeme() {
                         return (
                           <option
                             key={template.id}
-                            value={`${template.id},${template.url}`}
+                            value={`${template.id},${template.url},${template.box_count}`}
                           >
                             {template.name}
                           </option>
@@ -73,39 +79,34 @@ export function CreateMeme() {
               </div>
             </div>
 
-            <div className="mt-auto">
-              <div className="row g-3 mb-3">
-                <div className="col-auto">
-                  <label htmlFor="text0">Caption 1</label>
+            {Object.keys(boxes).map((item) => {
+              const number = Number.parseInt(item) + 1;
+              return (
+                <div className="mt-auto" key={item}>
+                  <div className="row g-3 mb-3">
+                    <div className="col-auto">
+                      <label htmlFor="text1">Caption {number}</label>
+                    </div>
+                    <div className="col">
+                      <input
+                        className="w-100"
+                        type="text"
+                        id="text1"
+                        name={item}
+                        value={boxes[item]}
+                        onChange={(e) => {
+                          const inputName = e.target.name;
+                          setBoxes({
+                            ...boxes,
+                            [inputName]: e.target.value,
+                          });
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div className="col">
-                  <input
-                    className="w-100"
-                    type="text"
-                    id="text0"
-                    value={text0}
-                    onChange={(e) => setText0(e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-auto">
-              <div className="row g-3 mb-3">
-                <div className="col-auto">
-                  <label htmlFor="text1">Caption 2</label>
-                </div>
-                <div className="col">
-                  <input
-                    className="w-100"
-                    type="text"
-                    id="text1"
-                    value={text1}
-                    onChange={(e) => setText1(e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
+              );
+            })}
 
             <img id="meme-preview" src={source} alt="placeholder" />
 

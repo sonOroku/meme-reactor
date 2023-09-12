@@ -20,8 +20,7 @@ class AccountWithHashPassword(AccountOut):
 
 class MemeIn(BaseModel):
     template_id: int
-    text0: str
-    text1: str
+    boxes: List[str]
 
 
 class MemeOut(BaseModel):
@@ -35,6 +34,7 @@ class MemeTemplate(BaseModel):
     id: int
     name: str
     url: str
+    box_count: int
 
 
 class Like(BaseModel):
