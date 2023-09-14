@@ -24,3 +24,13 @@ code {
   flex-direction: column;
   align-items: flex-end;
 }
+
+footer .footer-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+footer {
+  padding-bottom: 10px;
+  background-color: #f8f8ff;
+}

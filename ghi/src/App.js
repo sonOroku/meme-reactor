@@ -10,6 +10,7 @@ import { Profile } from "./pages/Profile";
 import { SignUp } from "./pages/SignUp";
 import { Error } from "./pages/Error";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Footer } from "./components/Footer";
 
 export default function App() {
   const domain = /https:\/\/[^/]+/;
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="*" element={<Error />} />
           </Routes>
         </div>
+        <Footer />
       </BrowserRouter>
     </div>
   );

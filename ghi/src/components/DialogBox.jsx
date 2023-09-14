@@ -32,7 +32,7 @@ function DialogBox(meme_id) {
         Delete
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>Delete Meme</Modal.Title>
         </Modal.Header>
