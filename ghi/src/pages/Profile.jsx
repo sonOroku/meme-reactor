@@ -1,31 +1,17 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import { Meme } from "../components/Meme";
 import {
   useGetUserMemesQuery,
   useGetLikesQuery,
   useGetTokenQuery,
-  useLogoutMutation,
 } from "../app/apiSlice";
 import LikedMemes from "../components/LikedMemes";
 import { Link } from "react-router-dom";
 
 export function Profile() {
-  const { data: memes, error: memeError } = useGetUserMemesQuery();
-  const { data: likes, error: likeError } = useGetLikesQuery();
+  const { data: memes } = useGetUserMemesQuery();
+  const { data: likes } = useGetLikesQuery();
   const { data: token } = useGetTokenQuery();
-  const [logout] = useLogoutMutation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (
-      (memeError || likeError) &&
-      (memeError.status === 401 || likeError.status === 401)
-    ) {
-      logout();
-      navigate("/login");
-    }
-  }, []);
 
   return (
     <div className="column">

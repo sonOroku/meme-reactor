@@ -5,7 +5,6 @@ import { useLogoutMutation, useGetTokenQuery } from "../app/apiSlice";
 export const Nav = () => {
   const [logout] = useLogoutMutation();
   const { data: token } = useGetTokenQuery();
-
   return (
     <nav
       className="navbar navbar-expand-lg bg-dark border-bottom border-body"

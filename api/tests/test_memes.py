@@ -39,11 +39,13 @@ class FakeMemeRepo:
                 "id": 181913649,
                 "name": "Drake Hotline Bling",
                 "url": "https://i.imgflip.com/30b1gx.jpg",
+                "box_count": 2,
             },
             {
                 "id": 87743020,
                 "name": "Two Buttons",
                 "url": "https://i.imgflip.com/1g8my4.jpg",
+                "box_count": 3,
             },
         ]
 
@@ -85,8 +87,7 @@ def test_create_meme():
 
     meme_in = {
         "template_id": 375389275972,
-        "text0": "text0",
-        "text1": "text1",
+        "boxes": ["top caption", "bottom caption"],
     }
 
     response = client.post("/api/memes", json=meme_in)
@@ -126,11 +127,13 @@ def test_get_templates():
             "id": 181913649,
             "name": "Drake Hotline Bling",
             "url": "https://i.imgflip.com/30b1gx.jpg",
+            "box_count": 2,
         },
         {
             "id": 87743020,
             "name": "Two Buttons",
             "url": "https://i.imgflip.com/1g8my4.jpg",
+            "box_count": 3,
         },
     ]
 
