@@ -4,7 +4,7 @@ export function Footer() {
   return (
     <>
       <div className="footer-container"></div>
-      <footer className="fixed-bottom bg-light text-center">
+      <footer className="fixed-bottom bg-dark border-body text-center">
         <div>
           <strong>Development Team</strong>
         </div>

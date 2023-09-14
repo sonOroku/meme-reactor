@@ -7,7 +7,7 @@ export const Nav = () => {
   const { data: token } = useGetTokenQuery();
   return (
     <nav
-      className="navbar navbar-expand-lg bg-dark border-bottom border-body"
+      className="navbar navbar-expand-lg bg-dark border-bottom border-body fixed-top"
       data-bs-theme="dark"
     >
       <div className="container-fluid">

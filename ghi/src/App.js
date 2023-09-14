@@ -19,7 +19,7 @@ export default function App() {
     <div className="app">
       <BrowserRouter basename={basename}>
         <Nav />
-        <div className="container">
+        <div className="container nav-container">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<SignUp />} />

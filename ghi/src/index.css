@@ -27,7 +27,7 @@ code {
 
 footer .footer-link {
   text-decoration: none;
-  color: inherit;
+  color: white;
 }
 
 footer {
@@ -37,4 +37,12 @@ footer {
 
 .footer-container {
   margin-top: 80px;
+}
+
+.nav-container {
+  margin-top: 80px;
+}
+
+strong {
+  color: white;
 }
