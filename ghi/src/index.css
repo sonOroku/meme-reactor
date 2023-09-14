@@ -34,3 +34,7 @@ footer {
   padding-bottom: 10px;
   background-color: #f8f8ff;
 }
+
+.footer-container {
+  margin-top: 80px;
+}
