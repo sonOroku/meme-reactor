@@ -21,8 +21,10 @@ api-unit-tests-job:
   needs:
     - lint-test-job
   variables:
-    MONGO_INITDB_ROOT_USERNAME: meme_reactor
-    MONGO_INITDB_ROOT_PASSWORD: memereactor
+    # MONGO_INITDB_ROOT_USERNAME: meme_reactor
+    # MONGO_INITDB_ROOT_PASSWORD: memereactor
+    DATABASE_URL: "meme_reactor"
+    SIGNING_KEY: "memereactor"
   script:
     - cd api
     - pip install -r requirements.txt
