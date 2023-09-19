@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import { useSignUpMutation } from "../app/apiSlice";
 import { useNavigate } from "react-router-dom";
