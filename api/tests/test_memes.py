@@ -145,7 +145,7 @@ def test_delete_meme():
     app.dependency_overrides[MemeRepo] = FakeMemeRepo
     response = client.delete("/api/memes/20349875")
     assert response.status_code == 200
-    assert response.json() == True
+    assert response.json() is True
 
 
 def test_get_user_memes():

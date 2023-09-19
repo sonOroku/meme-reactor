@@ -103,7 +103,7 @@ def test_delete_like():
     response = client.delete("/api/likes/64e51fe1027d69cadbccebfc")
 
     assert response.status_code == 200
-    assert response.json() == True
+    assert response.json() is True
 
 
 def test_liked_memes():
