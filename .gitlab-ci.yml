@@ -25,6 +25,7 @@ api-unit-tests-job:
     # MONGO_INITDB_ROOT_PASSWORD: memereactor
     DATABASE_URL: "meme_reactor"
     SIGNING_KEY: "memereactor"
+    DB_NAME: "meme-reactor-db"
   script:
     - cd api
     - pip install -r requirements.txt
