@@ -24,7 +24,6 @@ class MemeRepo(GenRepo):
         params["password"] = PASSWORD
         for i, box in enumerate(info["boxes"]):
             params[f"boxes[{i}][text]"] = box
-        print(params)
         result = requests.post(
             "https://api.imgflip.com/caption_image", params=params
         )
