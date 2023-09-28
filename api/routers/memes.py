@@ -17,7 +17,10 @@ def create_meme(
     try:
         meme = repo.create_meme(input, user_id=account_data["id"])
     except InvalidTemplateError:
-        raise HTTPException(status_code=404, detail="Invalid Template ID")
+        raise HTTPException(
+            status_code=503,
+            detail="Invalid Template ID or missing credentials",
+        )
     return meme
 
 

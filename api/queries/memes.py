@@ -24,11 +24,13 @@ class MemeRepo(GenRepo):
         params["password"] = PASSWORD
         for i, box in enumerate(info["boxes"]):
             params[f"boxes[{i}][text]"] = box
+        print(params)
         result = requests.post(
             "https://api.imgflip.com/caption_image", params=params
         )
         data = result.json()
         if data["success"] is False:
+            print(data["error_message"])
             raise InvalidTemplateError
         meme = {"meme_url": data["data"]["url"]}
         meme["created_by"] = user_id

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable */
+import React, { useState, useEffect } from "react";
 import { useGetTemplatesQuery, useCreateMemeMutation } from "../app/apiSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -8,8 +9,9 @@ const placeholder =
 export function CreateMeme() {
   const [template_id, setTemplateId] = useState("");
   const { data: templates } = useGetTemplatesQuery();
-  const [meme] = useCreateMemeMutation();
+  const [meme, memeResponse] = useCreateMemeMutation();
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
   const [source, setSource] = useState(placeholder);
   const [boxes, setBoxes] = useState({ 0: "", 1: "" });
   const [box_count, setBoxCount] = useState(2);
@@ -33,8 +35,16 @@ export function CreateMeme() {
       boxes: Object.values(boxes),
     };
     meme(info);
-    navigate("/profile");
   };
+  useEffect(() => {
+    if (memeResponse.isSuccess) {
+      navigate("/profile");
+    } else if (memeResponse.isError) {
+      setErrorMessage(
+        "Sorry. The meme creation engine seems to be having some problems"
+      );
+    }
+  }, [memeResponse]);
   const handleReset = (e) => {
     setTemplateId("");
     setBoxes({ 0: "", 1: "" });
@@ -47,7 +57,11 @@ export function CreateMeme() {
       <div className="offset-3 col-6">
         <div className="shadow p-4 mt-5 bg-white">
           <h2>Create a Meme</h2>
-
+          {errorMessage && (
+            <div className="alert alert-warning" role="alert">
+              {errorMessage}
+            </div>
+          )}
           <form className="d-flex flex-column" onSubmit={handleSubmit}>
             <div className="mt-auto">
               <div className="row g-3 mb-3">
